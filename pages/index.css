@@ -2,5 +2,22 @@
 @import url(../vendor/fonts/inter.css);
 
 .page {
+  background-color: #fff;
+  max-width: 880px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 45px 0 60px 0;
+  box-sizing: border-box;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+
+.content {
+  flex: 1;
 }
