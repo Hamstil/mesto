@@ -2,7 +2,7 @@
 @import url(../vendor/fonts/inter.css);
 
 .page {
-  background-color: #ccc;
+  background-color: #000;
   max-width: 880px;
   min-height: 100vh;
   margin: 0 auto;
@@ -20,4 +20,9 @@
 
 .content {
   flex: 1;
+}
+
+.page__header {
+  padding-bottom: 41px;
+  border-bottom: 1px solid #545454;
 }
