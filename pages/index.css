@@ -2,7 +2,7 @@
 @import url(../vendor/fonts/inter.css);
 
 .page {
-  background-color: #fff;
+  background-color: #ccc;
   max-width: 880px;
   min-height: 100vh;
   margin: 0 auto;
