@@ -32,3 +32,51 @@
     padding-left: 27px;
   }
 }
+
+.content__profile {
+  padding-top: 40px;
+  padding-bottom: 51px;
+}
+
+.profile {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.profile__avatar {
+  width: 120px;
+  border-radius: 50%;
+}
+
+.profile__info {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 30px;
+  max-width: 336px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.profile__title {
+  padding: 0;
+  margin: 0 0 16px 0;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+  color: #fff;
+}
+
+.profile__subtitle {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #fff;
+}
+
+.profile__add-button {
+  margin-left: auto;
+}
