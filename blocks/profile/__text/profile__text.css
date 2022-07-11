@@ -14,3 +14,9 @@
     max-width: 244px;
   }
 }
+
+@media screen and (max-width: 340px) {
+  .profile__text {
+    max-width: 200px;
+  }
+}

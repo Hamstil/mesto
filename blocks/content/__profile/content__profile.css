@@ -14,5 +14,7 @@
   .content__profile {
     padding-left: 19px;
     padding-right: 19px;
+    padding-top: 42px;
+    padding-bottom: 36px;
   }
 }
