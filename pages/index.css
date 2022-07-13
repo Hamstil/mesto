@@ -29,11 +29,11 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__paragraph/footer__paragraph.css);
 @import url(../blocks/popup/popup.css);
-@import url(../blocks/popup/_is-opened/pupup_is-opened.css);
+@import url(../blocks/popup/_is-opened/popup_is-opened.css);
 @import url(../blocks/popup/__content/popup__content.css);
 @import url(../blocks/popup/__close/popup__close.css);
-@import url(../blocks/popup/__title/pupup__title.css);
-@import url(../blocks/pupup-form/pupup-form.css);
-@import url(../blocks/pupup-form/__input/pupup-form__input.css);
-@import url(../blocks/pupup-form/__save/pupup-form__save.css);
+@import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup-form/popup-form.css);
+@import url(../blocks/popup-form/__input/popup-form__input.css);
+@import url(../blocks/popup-form/__save/popup-form__save.css);
 

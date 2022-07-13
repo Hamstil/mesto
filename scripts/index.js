@@ -3,11 +3,11 @@ const popupElement = document.querySelector(".popup");
 const popupCloseBotton = document.querySelector(".popup__close");
 
 function openPopup () {
-  popupElement.classList.add("pupup_is-opened");
+  popupElement.classList.add("popup_is-opened");
 }
 
 function closePopup () {
-  popupElement.classList.remove("pupup_is-opened");
+  popupElement.classList.remove("popup_is-opened");
 }
 
 function closePopupClickOnShadow (event) {
@@ -21,10 +21,10 @@ popupCloseBotton.addEventListener("click", closePopup);
 popupElement.addEventListener("click", closePopupClickOnShadow);
 
 // Находим форму в DOM
-let formElement = document.querySelector(".pupup-form");
+let formElement = document.querySelector(".popup-form");
 // Находим поля формы в DOM
-let nameInput = document.querySelector(".pupup-form__input_name");
-let jobInput = document.querySelector(".pupup-form__input_job");
+let nameInput = document.querySelector(".popup-form__input_name");
+let jobInput = document.querySelector(".popup-form__input_job");
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
