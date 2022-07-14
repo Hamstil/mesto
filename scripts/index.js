@@ -9,8 +9,8 @@ let profileSubtitle = document.querySelector(".profile__subtitle");
 // Находим форму в DOM
 let formElement = document.querySelector(".popup-form");
 // Находим поля формы в DOM
-let nameInput = document.querySelector(".popup-form__input_name");
-let jobInput = document.querySelector(".popup-form__input_job");
+let nameInput = document.querySelector(".popup-form__input_name_text");
+let jobInput = document.querySelector(".popup-form__input_job_text");
 
 function openPopup () {
   nameInput.value = profileTitle.textContent;
@@ -32,13 +32,9 @@ function formSubmitHandler (evt) {
                            // Так мы можем определить свою логику отправки.
                            // О том, как это делать, расскажем позже.
 
-    // Получите значение полей jobInput и nameInput из свойства value
-    let nameInputContent = nameInput.value;
-    let jobInputContent = jobInput.value;
-
-        // Вставьте новые значения с помощью textContent
-    profileTitle.textContent = nameInputContent;
-    profileSubtitle.textContent = jobInputContent;
+    // Вставьте новые значения с помощью textContent
+    profileTitle.textContent = nameInput.value;
+    profileSubtitle.textContent = jobInput.value;
     closePopup();
 }
 

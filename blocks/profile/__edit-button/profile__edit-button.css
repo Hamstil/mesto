@@ -2,15 +2,15 @@
   border: 1px solid #fff;
   width: 24px;
   height: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: none;
+  background: url(../../../images/edit-botton.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 10px 10px;
   cursor: pointer;
   opacity: 1;
   transition: 0.3s ease;
   position: relative;
-  bottom: 6px;
+  bottom: 16px;
 }
 
 .profile__edit-button:hover {
@@ -21,6 +21,7 @@
   .profile__edit-button {
     width: 18px;
     height: 18px;
-    bottom: 4px;
+    bottom: 10px;
+    background-size: 7.5px 7.5px;
   }
 }
