@@ -1,12 +1,12 @@
 @media screen and (max-width: 960px) {
-  .content__elements {
+  .content__section {
     padding-left: 27px;
     padding-right: 27px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .content__elements {
+  .content__section {
     padding-left: 19px;
     padding-right: 19px;
   }
