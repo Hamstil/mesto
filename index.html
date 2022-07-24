@@ -23,58 +23,11 @@
         </div>
         <button aria-label="Изменить профиль" type="button" class="profile__edit-button"></button>
       </div>
-      <button aria-label="Добавить в профиль" type="button" class="profile__add-button"></button>
+      <button aria-label="Добавить карточку" type="button" class="profile__add-card-button"></button>
     </section>
     <section class="section content__section">
       <ul class="elements-content">
-        <li class="element">
-          <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
-          <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Карачаевск</h2>
-            <button aria-label="кнопка лайка" type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
-          <img src="./images/elbrus.jpg" alt="Гора Эльбрус" class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Гора Эльбрус</h2>
-            <button aria-label="кнопка лайка" type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
-          <img src="./images/dombai.jpg" alt="Домбай" class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Домбай</h2>
-            <button aria-label="кнопка лайка" type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
-          <img src="./images/antarktida.jpg" alt="Антарктида" class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Антарктида</h2>
-            <button aria-label="кнопка лайка" type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
-          <img src="./images/Baikal.jpg" alt="Байкал" class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Байкал</h2>
-            <button aria-label="кнопка лайка" type="button" class="element__like"></button>
-          </div>
-        </li>
-        <li class="element">
-          <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
-          <img src="./images/Belovezhskaja-busha.jpg" alt="Беловежская пуща" class="element__image">
-          <div class="element__group">
-            <h2 class="element__title">Беловежская пуща</h2>
-            <button aria-label="кнопка лайка" type="button" class="element__like"></button>
-          </div>
-        </li>
+
       </ul>
     </section>
   </main>
@@ -113,6 +66,17 @@
       <p class="popup__text">Карачаевск</p>
     </div>
   </div>
+
+  <template class="cards-element">
+    <li class="element">
+      <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
+      <img src="" alt="Карачаевск" class="element__image">
+      <div class="element__group">
+        <h2 class="element__title"></h2>
+        <button aria-label="кнопка лайка" type="button" class="element__like"></button>
+      </div>
+    </li>
+  </template>
 
   <script src="./scripts/index.js"></script>
 </body>
