@@ -27,7 +27,16 @@
     </section>
     <section class="section content__section">
       <ul class="elements-content">
-
+        <template class="cards-element">
+          <li class="element">
+            <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
+            <img src="" alt="" class="element__image">
+            <div class="element__group">
+              <h2 class="element__title"></h2>
+              <button aria-label="кнопка лайка" type="button" class="element__like"></button>
+            </div>
+          </li>
+        </template>
       </ul>
     </section>
   </main>
@@ -39,7 +48,7 @@
     <div class="popup__content">
       <button aria-label="Закрыть диалоговое окно" type="button" class="popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form name="edit-profile" class="popup-form">
+      <form name="edit-profile" class="popup-form popup-form_type_edit">
         <input type="text" name="name" value="Жак-Ив Кусто" placeholder="Введите имя" required class="popup-form__input popup-form__input_text_name">
         <input type="text" name="job" value="Исследователь океана" placeholder="Введите род деятельности" required class="popup-form__input popup-form__input_text_job">
         <button aria-label="Кнопка сохранить" type="submit" class="popup-form__save">Сохранить</button>
@@ -51,9 +60,9 @@
     <div class="popup__content">
       <button aria-label="Закрыть диалоговое окно" type="button" class="popup__close"></button>
       <h2 class="popup__title">Новое место</h2>
-      <form name="edit-card" class="popup-form">
-        <input type="text" name="name-place" value="Горнный Алтай" placeholder="Введите название места" required class="popup-form__input popup-form__input_text_name-place">
-        <input type="text" name="image-place-link" value="https://unsplash.com/example.jpg" placeholder="Введите ссылку на изображение" required class="popup-form__input popup-form__input_text_place-link">
+      <form name="edit-card" class="popup-form popup-form_type_add">
+        <input type="text" name="name-place" value="" placeholder="Введите название места" required class="popup-form__input popup-form__input_text_name-place">
+        <input type="text" name="image-place-link" value="" placeholder="Введите ссылку на изображение" required class="popup-form__input popup-form__input_text_place-link">
         <button aria-label="Кнопка создать" type="submit" class="popup-form__create">Создать</button>
       </form>
     </div>
@@ -67,16 +76,7 @@
     </div>
   </div>
 
-  <template class="cards-element">
-    <li class="element">
-      <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
-      <img src="" alt="Карачаевск" class="element__image">
-      <div class="element__group">
-        <h2 class="element__title"></h2>
-        <button aria-label="кнопка лайка" type="button" class="element__like"></button>
-      </div>
-    </li>
-  </template>
+
 
   <script src="./scripts/index.js"></script>
 </body>
