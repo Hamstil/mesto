@@ -23,7 +23,7 @@ const profileTitle = document.querySelector(".profile__title");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 
 const elementConteiner = document.querySelector(".elements-content");
-const cardsElementTemplate = document.querySelector(".cards-element").content.children[0];
+const cardsElementTemplate = document.querySelector(".cards-element").content.querySelector(".element");
 
 const initialCards = [
   {
@@ -68,11 +68,13 @@ function closePopup (popup) {
 // событие по кнопке редактирование профиля
 profileEditBotton.addEventListener("click" , function () {
   openPopup(popupEditProfile);
-  addProfileValue();
+  defaultProfileValue();
 });
 
 // событие по кнопке добавления карточки
 profileAddCardButton.addEventListener("click", function () {
+  placeInput.value = '';
+  linkInput.value = '';
   openPopup(popupEditCard);
 });
 
@@ -85,8 +87,8 @@ popupCloseBotton.forEach((button) => {
 });
 
 
-//функция добавления значений из профиля
-function addProfileValue() {
+//функция значений из профиля по умолчанию
+function defaultProfileValue() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
 }
@@ -99,33 +101,72 @@ function formAddProfile (evt) {
   profileSubtitle.textContent = jobInput.value;
   closePopup(popupEditProfile);
 }
-formTypeEdit.addEventListener('submit', formAddProfile);
+formTypeEdit.addEventListener("submit", formAddProfile);
 
+// функция создания карточки
+function creatCard (itemCard) {
 
-function renderCard() {
-  initialCards.forEach(function (element) {
+  const cardTemplate = cardsElementTemplate.cloneNode(true);
 
-    const cardElementConteiner = cardsElementTemplate.cloneNode(true);
-    const imageElement = cardElementConteiner.querySelector(".element__image");
-    const cardbottonDel = cardElementConteiner.querySelector('.element__trash');
+  const cardImage = cardTemplate.querySelector(".element__image");
+  const cardTitle = cardTemplate.querySelector(".element__title");
+  const buttonDel = cardTemplate.querySelector(".element__trash");
+  const buttonLike = cardTemplate.querySelector(".element__like");
+  const imageElement = cardTemplate.querySelector(".element__image");
 
-    imageElement.src = element.link;
-    imageElement.alt = element.name;
-    cardElementConteiner.querySelector(".element__title").textContent = element.name;
+  cardImage.src = itemCard.link;
+  cardImage.alt = itemCard.name;
+  cardTitle.textContent = itemCard.name;
 
-    cardbottonDel.addEventListener("click", function () {
-      cardElementConteiner.remove();
-    });
+  buttonDel.addEventListener("click", delCard);
+  buttonLike.addEventListener("click", likeCard);
+  imageElement.addEventListener("click", viewImageCard);
 
-    elementConteiner.append(cardElementConteiner);
-});
-
+  return cardTemplate;
 }
-renderCard();
+
+// функция добавления данных в карточку
+function formAddToCard (evt) {
+  evt.preventDefault();
+  const addCardsInput = {
+    name: placeInput.value,
+    link: linkInput.value,
+  }
+  elementConteiner.prepend(creatCard(addCardsInput));
+  closePopup(popupEditCard);
+}
+formTypeAdd.addEventListener("submit", formAddToCard);
 
 
+// функция удаления карточки
+function delCard(evt){
+  evt.target.closest(".element").remove();
+}
 
+// функция лайка
+function likeCard (evt) {
+  evt.target.classList.toggle("element__like_enable");
+}
 
+//Функция отображения карточек по уполчанию
+function defaultCards () {
+  initialCards.forEach((card) => {
+    elementConteiner.append(creatCard(card));
+  });
+}
+defaultCards();
+
+// функция отображения картинки на весь экран
+function viewImageCard (evt) {
+  const currentViewImage = popupViewImage;
+  const imgPopup = currentViewImage.querySelector(".popup__image");
+  const titlePopup = currentViewImage.querySelector(".popup__text");
+  const currentTitle = evt.target.closest(".element").querySelector(".element__title");
+  imgPopup.src = evt.target.src;
+  imgPopup.alt = evt.target.alt;
+  titlePopup.textContent = currentTitle.textContent;
+  openPopup(currentViewImage);
+}
 
 
 
