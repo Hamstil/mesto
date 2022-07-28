@@ -18,13 +18,15 @@ const jobInput = document.querySelector(".popup-form__input_text_job"); // по�
 const placeInput = document.querySelector(".popup-form__input_text_name-place"); // поле название места в форме добавления
 const linkInput = document.querySelector(".popup-form__input_text_place-link"); // поле ссылка в форме добавления
 
-// Выберите элементы, куда должны быть вставлены значения полей
+// Выбор элементов, куда должны быть вставлены значения полей
 const profileTitle = document.querySelector(".profile__title");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 
+// Выбор контейнера под шаблон и сам шаблон
 const elementConteiner = document.querySelector(".elements-content");
 const cardsElementTemplate = document.querySelector(".cards-element").content.querySelector(".element");
 
+// массив для рендера по умолчанию
 const initialCards = [
   {
     name: 'Архыз',
@@ -50,8 +52,7 @@ const initialCards = [
     name: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
-]; // массив для рендера по умолчанию
-
+];
 
 // Функции открытия и закрытия popup
 
@@ -67,9 +68,15 @@ function closePopup (popup) {
 
 // событие по кнопке редактирование профиля
 profileEditBotton.addEventListener("click" , function () {
-  openPopup(popupEditProfile);
   defaultProfileValue();
+  openPopup(popupEditProfile);
 });
+
+//функция значений из профиля по умолчанию
+function defaultProfileValue() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
+}
 
 // событие по кнопке добавления карточки
 profileAddCardButton.addEventListener("click", function () {
@@ -85,14 +92,6 @@ popupCloseBotton.forEach((button) => {
     closePopup(currntPopup);
   });
 });
-
-
-//функция значений из профиля по умолчанию
-function defaultProfileValue() {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileSubtitle.textContent;
-}
-
 
 // функция добавления данных в профиль
 function formAddProfile (evt) {
@@ -167,18 +166,3 @@ function viewImageCard (evt) {
   titlePopup.textContent = currentTitle.textContent;
   openPopup(currentViewImage);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
