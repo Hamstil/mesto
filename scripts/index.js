@@ -64,12 +64,22 @@ const initialCards = [
 function openPopup (popup) {
   popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", closePopupByEsc);
+  closePopupOverlay(popup);
 }
 
 //функция закрытия popup
 function closePopup (popup) {
   popup.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", closePopupByEsc);
+}
+
+//функция закрытия popup по overlay
+function closePopupOverlay (popupOpen) {
+  popupOpen.addEventListener("click", function(evt){
+    if (evt.target === evt.currentTarget){
+      closePopup(popupOpen);
+    }
+  });
 }
 
 //функция закрытия popup по esc
