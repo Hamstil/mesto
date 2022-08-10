@@ -63,11 +63,21 @@ const initialCards = [
 // функция открытия popup
 function openPopup (popup) {
   popup.classList.add("popup_is-opened");
+  document.addEventListener("keydown", closePopupByEsc);
 }
 
 //функция закрытия popup
 function closePopup (popup) {
   popup.classList.remove("popup_is-opened");
+  document.removeEventListener("keydown", closePopupByEsc);
+}
+
+//функция закрытия popup по esc
+function closePopupByEsc (evt) {
+  const currentPopup = document.querySelector('.popup_is-opened');
+  if (evt.key === 'Escape'){
+    closePopup(currentPopup);
+  }
 }
 
 // событие по кнопке редактирование профиля
