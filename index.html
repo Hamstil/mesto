@@ -39,9 +39,14 @@
     <div class="popup__content">
       <button aria-label="Закрыть диалоговое окно" type="button" class="popup__close"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form name="edit-profile" class="popup-form popup-form_type_edit">
-        <input type="text" name="name" value="Жак-Ив Кусто" placeholder="Введите имя" required class="popup-form__input popup-form__input_text_name">
-        <input type="text" name="job" value="Исследователь океана" placeholder="Введите род деятельности" required class="popup-form__input popup-form__input_text_job">
+      <form name="edit-profile" class="popup-form popup-form_type_edit" novalidate>
+        <label class="popup-form__field">
+          <input id="porfile-name" type="text" name="name" value="Жак-Ив Кусто" placeholder="Введите имя" class="popup-form__input popup-form__input_text_name" minlength="2" maxlength="40" required>
+          <span class="popup-form__error porfile-name-error"></span>
+        </label>
+        <label class="popup-form__field">
+          <input type="text" name="job" value="Исследователь океана" placeholder="Введите род деятельности" class="popup-form__input popup-form__input_text_job" minlength="2" maxlength="200" required>
+        </label>
         <button aria-label="Кнопка сохранить" type="submit" class="popup-form__save">Сохранить</button>
       </form>
     </div>
@@ -51,9 +56,14 @@
     <div class="popup__content">
       <button aria-label="Закрыть диалоговое окно" type="button" class="popup__close"></button>
       <h2 class="popup__title">Новое место</h2>
-      <form name="edit-card" class="popup-form popup-form_type_add">
-        <input type="text" name="name-place" value="" placeholder="Введите название места" required class="popup-form__input popup-form__input_text_name-place">
-        <input type="text" name="image-place-link" value="" placeholder="Введите ссылку на изображение" required class="popup-form__input popup-form__input_text_place-link">
+      <form name="edit-card" class="popup-form popup-form_type_add" novalidate>
+        <label class="popup-form__field">
+           <input id="place-name" type="text" name="name-place" value="" placeholder="Введите название места" class="popup-form__input popup-form__input_text_name-place" minlength="2" maxlength="30" required>
+           <span class="popup-form__error place-name-error"></span>
+        </label>
+        <label class="popup-form__field">
+           <input type="url" name="image-place-link" value="" placeholder="Введите ссылку на изображение" class="popup-form__input popup-form__input_text_place-link" required>
+        </label>
         <button aria-label="Кнопка создать" type="submit" class="popup-form__create">Создать</button>
       </form>
     </div>

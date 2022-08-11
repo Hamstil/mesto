@@ -1,0 +1,10 @@
+.popup-form__input_error-active {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+  margin-top: 5px;
+  max-width: 358px;
+  min-height: 33px;
+}

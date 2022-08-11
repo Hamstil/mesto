@@ -1,0 +1,18 @@
+.popup-form__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-form__field:last-of-type {
+  margin-bottom: 48px;
+}
+
+@media screen and (max-width: 570px) {
+  .popup-form__field {
+    padding-bottom: 9px;
+  }
+
+  .popup-form__field:last-of-type {
+    margin-bottom: 45px;
+  }
+}

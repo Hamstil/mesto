@@ -65,6 +65,7 @@ function openPopup (popup) {
   popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", closePopupByEsc);
   closePopupOverlay(popup);
+  clearError();
 }
 
 //функция закрытия popup
@@ -185,3 +186,45 @@ function viewImageCard (evt) {
   titlePopup.textContent = evt.target.alt;
   openPopup(currentViewImage);
 }
+
+
+// функция отчистки формы
+function clearError () {
+  inputFormEditProfile.classList.remove("popup-form__input_type-error");
+  formError.classList.remove("popup-form__input_error-active");
+  formError.textContent = '';
+};
+
+
+
+// Логика проверки валидности формы
+const inputFormEditProfile = formTypeEdit.querySelector(".popup-form__input");
+const formError = formTypeEdit.querySelector(`.${inputFormEditProfile.id}-error`);
+
+// функция показа ошибки
+const showInputError = (element, errorMessage) => {
+  element.classList.add("popup-form__input_type-error");
+
+  formError.textContent = errorMessage;
+  formError.classList.add("popup-form__input_error-active");
+};
+
+// функция скрытия ошибки
+const hideInputError = (element) => {
+  element.classList.remove("popup-form__input_type-error");
+  formError.classList.remove("popup-form__input_error-active");
+  formError.textContent = '';
+};
+
+// функция валидации
+const isValid = () => {
+  if (!inputFormEditProfile.validity.valid){
+    showInputError(inputFormEditProfile, inputFormEditProfile.validationMessage);
+  }
+  else {
+    hideInputError(inputFormEditProfile);
+  }
+};
+
+inputFormEditProfile.addEventListener("input", isValid);
+
