@@ -8,3 +8,9 @@
   max-width: 358px;
   min-height: 33px;
 }
+
+@media screen and (max-width: 570px) {
+  .popup-form__error_active {
+    max-width: 238px;
+  }
+}

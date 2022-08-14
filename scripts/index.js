@@ -21,6 +21,8 @@ const nameInput = document.querySelector(".popup-form__input_text_name"); // п�
 const jobInput = document.querySelector(".popup-form__input_text_job"); // поле описание в форме редактирования
 const placeInput = document.querySelector(".popup-form__input_text_name-place"); // поле название места в форме добавления
 const linkInput = document.querySelector(".popup-form__input_text_place-link"); // поле ссылка в форме добавления
+const buttonFormTypeAdd = formTypeAdd.querySelector(".popup-form__button"); // кнопка в форме добавления карточки
+const buttonFormTypeEdit = formTypeEdit.querySelector(".popup-form__button"); // кнопка в форме профиля
 
 // Выбор элементов, куда должны быть вставлены значения полей
 const profileTitle = document.querySelector(".profile__title");
@@ -65,18 +67,21 @@ function openPopup (popup) {
   popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", closePopupByEsc);
   closePopupOverlay(popup);
-  // clearError();
+  clearError();
+  document.removeEventListener("keydown", pressEnter);
 }
 
 //функция закрытия popup
 function closePopup (popup) {
   popup.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", closePopupByEsc);
+  buttonFormTypeAdd.setAttribute("disabled", "disabled");
+  buttonFormTypeAdd.classList.add("popup-form__button_disabled");
 }
 
 //функция закрытия popup по overlay
 function closePopupOverlay (popupOpen) {
-  popupOpen.addEventListener("click", function(evt){
+  popupOpen.addEventListener("mousedown", function(evt){
     if (evt.target === evt.currentTarget){
       closePopup(popupOpen);
     }
@@ -97,15 +102,21 @@ profileEditBotton.addEventListener("click" , function () {
   openPopup(popupEditProfile);
 });
 
-//функция значений из профиля по умолчанию
+//функция значений из профиля по умолчанию и проверка значений
 function getProfileValue() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
+  if (nameInput.value && jobInput.value) {
+    buttonFormTypeEdit.removeAttribute("disabled");
+    buttonFormTypeEdit.classList.remove("popup-form__button_disabled");
+  }
 }
 
 // событие по кнопке добавления карточки
 profileAddCardButton.addEventListener("click", function () {
   formTypeAdd.reset();
+  buttonFormTypeAdd.setAttribute("disabled", "disabled");
+  buttonFormTypeAdd.classList.add("popup-form__button_disabled");
   openPopup(popupEditCard);
 });
 
@@ -124,6 +135,7 @@ function addFormToProfile (evt) {
   profileSubtitle.textContent = jobInput.value;
   closePopup(popupEditProfile);
 }
+
 formTypeEdit.addEventListener("submit", addFormToProfile);
 
 // функция создания карточки
@@ -155,10 +167,19 @@ function addFormToCard (evt) {
     link: linkInput.value,
   }
   elementConteiner.prepend(creatCard(addCardsInput));
+  document.addEventListener("keydown", pressEnter);
   closePopup(popupEditCard);
-}
+};
+
 formTypeAdd.addEventListener("submit", addFormToCard);
 
+
+// функция нажатия на enter
+function pressEnter (evt) {
+    if (evt.key === "Enter"){
+      evt.preventDefault();
+    }
+}
 
 // функция удаления карточки
 function delCard(evt){
@@ -186,84 +207,3 @@ function viewImageCard (evt) {
   titlePopup.textContent = evt.target.alt;
   openPopup(currentViewImage);
 }
-
-
-// функция отчистки формы
-function clearError () {
-  inputFormEditProfile.classList.remove("popup-form__input_type_error");
-  formError.classList.remove("popup-form__error_active");
-  formError.textContent = '';
-};
-
-
-
-// Выбор всех форм полей ввода и элементов для ошибок
-const enableValidation = ({
-  formSelector: '.popup-form',
-  inputSelector: '.popup-form__input',
-  submitButtonSelector: '.popup-form__button',
-  inactiveButtonClass: 'popup-form__button_disabled',
-  inputErrorClass: 'popup-form__input_type_error',
-  errorClass: 'popup-form__error_active'
-});
-
-
-enableFormValidation(enableValidation);
-
-
-function enableFormValidation (enableValidation) {
-  const formList = Array.from(document.querySelectorAll(enableValidation.formSelector));
-
-  formList.forEach((formElement) => {
-    formElement.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-    });
-
-    setEventListenters(formElement);
-  });
-};
-
-
-function setEventListenters (formElement) {
-  // находим все поля форм
-  const inputList = Array.from(document.querySelectorAll(enableValidation.inputSelector));
-
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener("input", () => {
-      isValid(formElement, inputElement);
-    });
-  });
-};
-
-// функция валидации
-function isValid (formElement, inputElement) {
-  if (!inputElement.validity.valid){
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-  }
-  else {
-    hideInputError(formElement, inputElement);
-  }
-};
-
-// функция показа ошибки
-function showInputError (formElement, inputElement, errorMessage) {
-
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  console.log(errorElement);
-  inputElement.classList.add(enableValidation.inputErrorClass);
-
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add(enableValidation.errorClass);
-};
-
-// функция скрытия ошибки
-function hideInputError (formElement, inputElement) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(enableValidation.inputErrorClass);
-  errorElement.classList.remove(enableValidation.errorClass);
-  errorElement.textContent = '';
-};
-
-
-
-

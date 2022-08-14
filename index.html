@@ -27,7 +27,16 @@
     </section>
     <section class="section content__section">
       <ul class="elements-content">
-
+        <template class="cards-element">
+          <li class="element">
+            <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
+            <img src="#" alt="карточка шаблон" class="element__image">
+            <div class="element__group">
+              <h2 class="element__title"></h2>
+              <button aria-label="кнопка лайка" type="button" class="element__like"></button>
+            </div>
+          </li>
+        </template>
       </ul>
     </section>
   </main>
@@ -79,18 +88,10 @@
     </div>
   </div>
 
-  <template class="cards-element">
-    <li class="element">
-      <button aria-label="кнопка удаления" type="button" class="element__trash"></button>
-      <img src="#" alt="карточка шаблон" class="element__image">
-      <div class="element__group">
-        <h2 class="element__title"></h2>
-        <button aria-label="кнопка лайка" type="button" class="element__like"></button>
-      </div>
-    </li>
-  </template>
+
 
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 
 </html>
