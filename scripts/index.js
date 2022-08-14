@@ -68,7 +68,7 @@ function openPopup (popup) {
   document.addEventListener("keydown", closePopupByEsc);
   closePopupOverlay(popup);
   clearError();
-  document.removeEventListener("keydown", pressEnter);
+  document.removeEventListener("keydown", preventDefaultEnter);
 }
 
 //функция закрытия popup
@@ -115,8 +115,6 @@ function getProfileValue() {
 // событие по кнопке добавления карточки
 profileAddCardButton.addEventListener("click", function () {
   formTypeAdd.reset();
-  buttonFormTypeAdd.setAttribute("disabled", "disabled");
-  buttonFormTypeAdd.classList.add("popup-form__button_disabled");
   openPopup(popupEditCard);
 });
 
@@ -167,15 +165,15 @@ function addFormToCard (evt) {
     link: linkInput.value,
   }
   elementConteiner.prepend(creatCard(addCardsInput));
-  document.addEventListener("keydown", pressEnter);
+  document.addEventListener("keydown", preventDefaultEnter);
   closePopup(popupEditCard);
 };
 
 formTypeAdd.addEventListener("submit", addFormToCard);
 
 
-// функция нажатия на enter
-function pressEnter (evt) {
+// функция предотвратить ввод Enter по умолчанию
+function preventDefaultEnter (evt) {
     if (evt.key === "Enter"){
       evt.preventDefault();
     }
