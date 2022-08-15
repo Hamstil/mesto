@@ -14,10 +14,7 @@ enableFormValidation(objectFromValidation);
 function enableFormValidation (objectFromValidation) {
   const formList = Array.from(document.querySelectorAll(objectFromValidation.formSelector));
   formList.forEach((formElement) => {
-    formElement.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-    });
-    setEventListenters(formElement, objectFromValidation);
+    formElement.addEventListener("submit", setEventListenters(formElement, objectFromValidation));
   });
 
 };
@@ -29,12 +26,12 @@ function setEventListenters (formElement, objectFromValidation) {
   const inputList = Array.from(formElement.querySelectorAll(objectFromValidation.inputSelector));
   const buttonElement = formElement.querySelector(objectFromValidation.submitButtonSelector);
 
-  toggleButtonState(inputList, buttonElement);
+  toggleButtonState(inputList, buttonElement, objectFromValidation);
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
       isValid(formElement, inputElement, objectFromValidation);
-      toggleButtonState(inputList, buttonElement);
+      toggleButtonState(inputList, buttonElement, objectFromValidation);
     });
   });
 };
@@ -72,15 +69,24 @@ function hasInvalidInput (inputList) {
   });
 };
 
+// функция отключения кнопки
+function disabledButton (buttonElement, objectFromValidation) {
+  buttonElement.setAttribute("disabled", "disabled");
+  buttonElement.classList.add(objectFromValidation.inactiveButtonClass);
+}
+ // функция включения кнопки
+ function activateButton (buttonElement, objectFromValidation) {
+    buttonElement.removeAttribute("disabled");
+    buttonElement.classList.remove(objectFromValidation.inactiveButtonClass);
+ }
+
 // функция включения кнопки в зависимости валидности формы
-function toggleButtonState (inputList, buttonElement) {
+function toggleButtonState (inputList, buttonElement, objectFromValidation) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.setAttribute("disabled", "disabled");
-    buttonElement.classList.add("popup-form__button_disabled");
+    disabledButton(buttonElement, objectFromValidation);
   }
   else {
-    buttonElement.removeAttribute("disabled");
-    buttonElement.classList.remove("popup-form__button_disabled");
+    activateButton(buttonElement, objectFromValidation);
   }
 };
 

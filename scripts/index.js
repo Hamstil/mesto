@@ -74,8 +74,6 @@ function openPopup (popup) {
 function closePopup (popup) {
   popup.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", closePopupByEsc);
-  buttonFormTypeAdd.setAttribute("disabled", "disabled");
-  buttonFormTypeAdd.classList.add("popup-form__button_disabled");
 }
 
 //функция закрытия popup по overlay
@@ -99,6 +97,7 @@ function closePopupByEsc (evt) {
 profileEditButton.addEventListener("click" , function () {
   getProfileValue();
   clearError(objectFromValidation);
+  activateButton(buttonFormTypeEdit, objectFromValidation);
   openPopup(popupEditProfile);
 });
 
@@ -106,16 +105,13 @@ profileEditButton.addEventListener("click" , function () {
 function getProfileValue() {
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileSubtitle.textContent;
-  if (nameInput.value && jobInput.value) {
-    buttonFormTypeEdit.removeAttribute("disabled");
-    buttonFormTypeEdit.classList.remove("popup-form__button_disabled");
-  }
 }
 
 // событие по кнопке добавления карточки
 profileAddCardButton.addEventListener("click", function () {
   formTypeAdd.reset();
   clearError(objectFromValidation);
+  disabledButton(buttonFormTypeAdd, objectFromValidation);
   openPopup(popupEditCard);
 });
 
@@ -128,7 +124,8 @@ popupCloseButtons.forEach((button) => {
 });
 
 // функция добавления данных в профиль
-function addFormToProfile () {
+function addFormToProfile (evt) {
+  evt.preventDefault();
   profileTitle.textContent = nameInput.value;
   profileSubtitle.textContent = jobInput.value;
   closePopup(popupEditProfile);
@@ -158,13 +155,15 @@ function creatCard (itemCard) {
 }
 
 // функция добавления данных в карточку
-function addFormToCard () {
+function addFormToCard (evt) {
+  evt.preventDefault();
   const addCardsInput = {
     name: placeInput.value,
     link: linkInput.value,
   }
   elementContainer.prepend(creatCard(addCardsInput));
   document.addEventListener("keydown", preventDefaultEnter);
+  disabledButton(buttonFormTypeAdd, objectFromValidation);
   closePopup(popupEditCard);
 };
 
