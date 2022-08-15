@@ -8,7 +8,6 @@ const objectFromValidation = {
   errorClass: 'popup-form__error_active'
 };
 
-
 enableFormValidation(objectFromValidation);
 
 // функция включения валидации
@@ -87,14 +86,14 @@ function toggleButtonState (inputList, buttonElement) {
 
 
 // функция отчистки ошибок формы
-function clearError () {
-  const errors = document.querySelectorAll(".popup-form__error_active");
+function clearError (objectFromValidation) {
+  const errors = document.querySelectorAll(`.${objectFromValidation.errorClass}`);
   errors.forEach((error) => {
-    error.classList.remove("popup-form__error_active");
+    error.classList.remove(objectFromValidation.errorClass);
     error.textContent ='';
   });
-  const inputErrors = document.querySelectorAll(".popup-form__input_type_error");
+  const inputErrors = document.querySelectorAll(`.${objectFromValidation.inputErrorClass}`);
   inputErrors.forEach((inputError) => {
-    inputError.classList.remove("popup-form__input_type_error");
+    inputError.classList.remove(objectFromValidation.inputErrorClass);
   });
 };
