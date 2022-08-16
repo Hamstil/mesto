@@ -14,7 +14,7 @@ enableFormValidation(objectFromValidation);
 function enableFormValidation (objectFromValidation) {
   const formList = Array.from(document.querySelectorAll(objectFromValidation.formSelector));
   formList.forEach((formElement) => {
-    formElement.addEventListener("submit", setEventListenters(formElement, objectFromValidation));
+    setEventListenters(formElement, objectFromValidation);
   });
 
 };
