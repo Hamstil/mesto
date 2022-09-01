@@ -1,3 +1,10 @@
+import {initialCards, objectFromValidation} from './data.js';
+import {Card} from './Card.js';
+
+
+
+
+
 // Выбор popup элементвов по модификаторам
 const popupEditProfile = document.querySelector(".popup_edit_profile");
 const popupEditCard = document.querySelector(".popup_edit_card");
@@ -31,34 +38,6 @@ const profileSubtitle = document.querySelector(".profile__subtitle");
 // Выбор контейнера под шаблон и сам шаблон
 const elementContainer = document.querySelector(".elements-content");
 const cardsElementTemplate = document.querySelector(".cards-element").content.querySelector(".element");
-
-// массив для рендера по умолчанию
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 
 // Функции открытия и закрытия popup
 
@@ -136,22 +115,9 @@ formTypeEdit.addEventListener("submit", addFormToProfile);
 // функция создания карточки
 function creatCard (itemCard) {
 
-  const cardTemplate = cardsElementTemplate.cloneNode(true);
+  const newCard = new Card(itemCard.name, itemCard.link, ".cards-element").generateCard();
+  return newCard;
 
-  const cardImage = cardTemplate.querySelector(".element__image");
-  const cardTitle = cardTemplate.querySelector(".element__title");
-  const buttonDel = cardTemplate.querySelector(".element__trash");
-  const buttonLike = cardTemplate.querySelector(".element__like");
-
-  cardImage.src = itemCard.link;
-  cardImage.alt = itemCard.name;
-  cardTitle.textContent = itemCard.name;
-
-  buttonDel.addEventListener("click", handleDelCard);
-  buttonLike.addEventListener("click", handleLikeCard);
-  cardImage.addEventListener("click", (data) => viewImageCard(data));
-
-  return cardTemplate;
 }
 
 // функция добавления данных в карточку
@@ -189,6 +155,7 @@ function handleLikeCard (evt) {
 
 //Функция отображения карточек по уполчанию
 function creatDefaultCards () {
+
   initialCards.forEach((card) => {
     elementContainer.append(creatCard(card));
   });
@@ -202,3 +169,104 @@ function viewImageCard (data) {
   titlePopup.textContent = data.target.alt;
   openPopup(popupViewImage);
 }
+
+
+
+
+
+// ВАЛИДАЦИЯ ФОРМЫ
+enableFormValidation(objectFromValidation);
+
+// функция включения валидации
+function enableFormValidation (objectFromValidation) {
+  const formList = Array.from(document.querySelectorAll(objectFromValidation.formSelector));
+  formList.forEach((formElement) => {
+    setEventListenters(formElement, objectFromValidation);
+  });
+
+};
+
+// функция слушатель событий ввода
+
+function setEventListenters (formElement, objectFromValidation) {
+  // находим все поля форм
+  const inputList = Array.from(formElement.querySelectorAll(objectFromValidation.inputSelector));
+  const buttonElement = formElement.querySelector(objectFromValidation.submitButtonSelector);
+
+  toggleButtonState(inputList, buttonElement, objectFromValidation);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", function () {
+      isValid(formElement, inputElement, objectFromValidation);
+      toggleButtonState(inputList, buttonElement, objectFromValidation);
+    });
+  });
+};
+
+// функция валидации
+function isValid (formElement, inputElement, objectFromValidation) {
+  if (!inputElement.validity.valid){
+    showInputError(formElement, inputElement, inputElement.validationMessage, objectFromValidation);
+  }
+  else {
+    hideInputError(formElement, inputElement, objectFromValidation);
+  }
+};
+
+// функция показа ошибки
+function showInputError (formElement, inputElement, errorMessage, objectFromValidation) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add(objectFromValidation.inputErrorClass);
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add(objectFromValidation.errorClass);
+};
+
+// функция скрытия ошибки
+function hideInputError (formElement, inputElement, objectFromValidation) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove(objectFromValidation.inputErrorClass);
+  errorElement.classList.remove(objectFromValidation.errorClass);
+  errorElement.textContent = '';
+};
+
+// функция проверки формы на валидность
+function hasInvalidInput (inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+};
+
+// функция отключения кнопки
+function disabledButton (buttonElement, objectFromValidation) {
+  buttonElement.setAttribute("disabled", "disabled");
+  buttonElement.classList.add(objectFromValidation.inactiveButtonClass);
+}
+ // функция включения кнопки
+ function activateButton (buttonElement, objectFromValidation) {
+    buttonElement.removeAttribute("disabled");
+    buttonElement.classList.remove(objectFromValidation.inactiveButtonClass);
+ }
+
+// функция включения кнопки в зависимости валидности формы
+function toggleButtonState (inputList, buttonElement, objectFromValidation) {
+  if (hasInvalidInput(inputList)) {
+    disabledButton(buttonElement, objectFromValidation);
+  }
+  else {
+    activateButton(buttonElement, objectFromValidation);
+  }
+};
+
+
+// функция отчистки ошибок формы
+function clearError (objectFromValidation) {
+  const errors = document.querySelectorAll(`.${objectFromValidation.errorClass}`);
+  errors.forEach((error) => {
+    error.classList.remove(objectFromValidation.errorClass);
+    error.textContent ='';
+  });
+  const inputErrors = document.querySelectorAll(`.${objectFromValidation.inputErrorClass}`);
+  inputErrors.forEach((inputError) => {
+    inputError.classList.remove(objectFromValidation.inputErrorClass);
+  });
+};
