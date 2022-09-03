@@ -115,7 +115,7 @@ formTypeEdit.addEventListener("submit", addFormToProfile);
 // функция создания карточки
 function creatCard (itemCard) {
 
-  const newCard = new Card(itemCard.name, itemCard.link, ".cards-element").generateCard();
+  const newCard = new Card(itemCard.name, itemCard.link, ".cards-element", viewImageCard).generateCard();
   return newCard;
 
 }
@@ -141,16 +141,6 @@ function preventDefaultEnter (evt) {
     if (evt.key === "Enter"){
       evt.preventDefault();
     }
-}
-
-// функция удаления карточки
-function handleDelCard(evt){
-  evt.target.closest(".element").remove();
-}
-
-// функция лайка
-function handleLikeCard (evt) {
-  evt.target.classList.toggle("element__like_enable");
 }
 
 //Функция отображения карточек по уполчанию
