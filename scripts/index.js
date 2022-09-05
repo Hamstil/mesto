@@ -33,12 +33,6 @@ const profileSubtitle = document.querySelector(".profile__subtitle");
 // Выбор контейнера под шаблон и сам шаблон
 const elementContainer = document.querySelector(".elements-content");
 
-// валидация формы редактирования профиля
-const enableValidatorTypeEdit = new FromValidator(objectFromValidation, formTypeEdit);
-enableValidatorTypeEdit.enableValidation();
-// валидация формы добавления карточки
-const enableValidatorTypeAdd = new FromValidator(objectFromValidation, formTypeAdd);
-enableValidatorTypeAdd.enableValidation();
 
 
 // Функции открытия и закрытия popup
@@ -161,3 +155,11 @@ function viewImageCard (data) {
   titlePopup.textContent = data.target.alt;
   openPopup(popupViewImage);
 }
+
+
+// валидация формы редактирования профиля
+const enableValidatorTypeEdit = new FromValidator(objectFromValidation, formTypeEdit);
+enableValidatorTypeEdit.enableValidation();
+// валидация формы добавления карточки
+const enableValidatorTypeAdd = new FromValidator(objectFromValidation, formTypeAdd);
+enableValidatorTypeAdd.enableValidation();
