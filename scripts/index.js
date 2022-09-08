@@ -41,23 +41,21 @@ const elementContainer = document.querySelector(".elements-content");
 function openPopup (popup) {
   popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", closePopupByEsc);
-  closePopupOverlay(popup);
-  document.removeEventListener("keydown", preventDefaultEnter);
+  popup.addEventListener("mousedown", closePopupOverlay);
 }
 
 // функция закрытия popup
 function closePopup (popup) {
   popup.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", closePopupByEsc);
+  popup.removeEventListener("mousedown", closePopupOverlay);
 }
 
 // функция закрытия popup по overlay
-function closePopupOverlay (popupOpen) {
-  popupOpen.addEventListener("mousedown", function(evt){
+function closePopupOverlay (evt) {
     if (evt.target === evt.currentTarget){
       closePopup(evt.currentTarget);
     }
-  });
 }
 
 // функция закрытия popup по esc
@@ -124,8 +122,7 @@ function addFormToCard (evt) {
     link: linkInput.value,
   }
   elementContainer.prepend(creatCard(addCardsInput));
-  document.addEventListener("keydown", preventDefaultEnter);
-  enableValidatorTypeAdd.disabledButton();
+  document.addEventListener("keydown", preventDefaultEnter); // нужно для того что бы при нажатии на Enter несколько раз карточка не дублировалась
   closePopup(popupEditCard);
 };
 
@@ -149,10 +146,10 @@ function creatDefaultCards () {
 creatDefaultCards();
 
 // функция отображения картинки на весь экран
-function viewImageCard (data) {
-  imgPopup.src = data.target.src;
-  imgPopup.alt = data.target.alt;
-  titlePopup.textContent = data.target.alt;
+function viewImageCard (name, link) {
+  imgPopup.src = link;
+  imgPopup.alt = name;
+  titlePopup.textContent = name;
   openPopup(popupViewImage);
 }
 

@@ -9,7 +9,7 @@ export class Card {
   }
 
   // шаблон карточки
-  _getTemplate() {
+  _getTemplate () {
     const cardTemplate = document.querySelector(this._cardTemlateSelector).content.querySelector(".element").cloneNode(true);
 
     return cardTemplate;
@@ -24,22 +24,29 @@ export class Card {
     return this._element;
   }
 
+  // функция удаления
+  _handleDel = () => {
+    this._element.remove();
+    this._element = null;
+  }
+
+  // функция лайка
+  _handleLike = (evt) => {
+    evt.target.classList.toggle("element__like_enable");
+  }
+
   // слушатели событий
-  _setEventListener() {
+  _setEventListener () {
 
     // слушатель лайка
-    this._element.querySelector('.element__like').addEventListener('click', (evt) => {
-      evt.target.classList.toggle("element__like_enable");
-    });
+    this._element.querySelector('.element__like').addEventListener('click', this._handleLike);
 
     // слушатель удаления
-    this._element.querySelector('.element__trash').addEventListener('click', () => {
-      this._element.closest(".element").remove();
-    });
+    this._element.querySelector('.element__trash').addEventListener('click', this._handleDel);
 
     // слушатель для открытия popup image
-    this._image.addEventListener('click', (evt) => {
-      this._viewImageCard(evt);
+    this._image.addEventListener('click', () => {
+      this._viewImageCard(this._name, this._link);
     });
   }
 
