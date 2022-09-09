@@ -70,7 +70,6 @@ function closePopupByEsc (evt) {
 profileEditButton.addEventListener("click" , function () {
   getProfileValue();
   enableValidatorTypeEdit.clearError();
-  enableValidatorTypeEdit.activateButton();
   openPopup(popupEditProfile);
 });
 

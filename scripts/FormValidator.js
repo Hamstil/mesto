@@ -78,15 +78,10 @@ export class FromValidator {
   }
 
   // функция отчистки ошибок
-  clearError(){
-    this._errors = document.querySelectorAll(`.${this._objectFormValid.errorClass}`);
-    this._errors.forEach((error) => {
-          error.classList.remove(this._objectFormValid.errorClass);
-          error.textContent ='';
-     });
-    this.inputErrors = document.querySelectorAll(`.${this._objectFormValid.inputErrorClass}`);
-    this.inputErrors.forEach((inputError) => {
-        inputError.classList.remove(this._objectFormValid.inputErrorClass);
-      });
+  clearError() {
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+    this.disabledButton();
   }
 }
