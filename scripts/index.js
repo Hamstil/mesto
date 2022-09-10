@@ -53,9 +53,9 @@ function closePopup (popup) {
 
 // функция закрытия popup по overlay
 function closePopupOverlay (evt) {
-    if (evt.target === evt.currentTarget){
-      closePopup(evt.currentTarget);
-    }
+  if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
+    closePopup(evt.currentTarget);
+  };
 }
 
 // функция закрытия popup по esc
@@ -83,7 +83,6 @@ function getProfileValue() {
 profileAddCardButton.addEventListener("click", function () {
   formTypeAdd.reset();
   enableValidatorTypeAdd.clearError();
-  enableValidatorTypeAdd.disabledButton();
   openPopup(popupEditCard);
 });
 
@@ -121,8 +120,8 @@ function addFormToCard (evt) {
     link: linkInput.value,
   }
   elementContainer.prepend(creatCard(addCardsInput));
-  document.addEventListener("keydown", preventDefaultEnter); // нужно для того что бы при нажатии на Enter несколько раз карточка не дублировалась
   closePopup(popupEditCard);
+  enableValidatorTypeAdd.disabledButton();
 };
 
 formTypeAdd.addEventListener("submit", addFormToCard);
