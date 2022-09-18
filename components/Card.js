@@ -1,7 +1,7 @@
 export class Card {
-  constructor(name, link, cardTemlateSelector, viewImageCard){
-    this._name = name;
-    this._link = link;
+  constructor(data, cardTemlateSelector, viewImageCard){
+    this._name = data.name;
+    this._link = data.link;
     this._cardTemlateSelector = cardTemlateSelector;
     this._viewImageCard = viewImageCard;
     this._element = this._getTemplate();

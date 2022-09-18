@@ -1,6 +1,7 @@
-import { initialCards, objectFromValidation } from './data.js';
-import { Card } from './Card.js';
-import { FromValidator } from './FormValidator.js';
+import { initialCards, objectFromValidation } from '../utils/data.js';
+import { Card } from '../components/Card.js';
+import { Section } from '../components/Section.js';
+import { FromValidator } from '../components/FormValidator.js';
 
 // Выбор popup элементвов по модификаторам
 const popupEditProfile = document.querySelector(".popup_edit_profile");
@@ -31,7 +32,7 @@ const profileTitle = document.querySelector(".profile__title");
 const profileSubtitle = document.querySelector(".profile__subtitle");
 
 // Выбор контейнера под шаблон и сам шаблон
-const elementContainer = document.querySelector(".elements-content");
+const elementContainer = ".elements-content";
 
 
 
@@ -105,12 +106,14 @@ function addFormToProfile (evt) {
 formTypeEdit.addEventListener("submit", addFormToProfile);
 
 // функция создания карточки
-function creatCard (itemCard) {
-
-  const newCard = new Card(itemCard.name, itemCard.link, ".cards-element", viewImageCard).generateCard();
-  return newCard;
-
+function creatCard (item) {
+  const newCard = new Card(item, ".cards-element", viewImageCard);
+  creatDefaultCards.setItem(newCard.generateCard());
 }
+
+// функция рендера картинок по умолчанию
+const creatDefaultCards = new Section({data: initialCards, renderer: creatCard}, elementContainer);
+creatDefaultCards.renderItems();
 
 // функция добавления данных в карточку
 function addFormToCard (evt) {
@@ -119,29 +122,12 @@ function addFormToCard (evt) {
     name: placeInput.value,
     link: linkInput.value,
   }
-  elementContainer.prepend(creatCard(addCardsInput));
+  creatCard(addCardsInput);
   closePopup(popupEditCard);
   enableValidatorTypeAdd.disabledButton();
 };
 
 formTypeAdd.addEventListener("submit", addFormToCard);
-
-
-// функция предотвратить ввод Enter по умолчанию
-function preventDefaultEnter (evt) {
-    if (evt.key === "Enter"){
-      evt.preventDefault();
-    }
-}
-
-// Функция отображения карточек по уполчанию
-function creatDefaultCards () {
-
-  initialCards.forEach((card) => {
-    elementContainer.append(creatCard(card));
-  });
-}
-creatDefaultCards();
 
 // функция отображения картинки на весь экран
 function viewImageCard (name, link) {
