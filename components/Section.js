@@ -1,18 +1,19 @@
 export class Section {
-  constructor({data, renderer}, containerSelector){
-    this._ititialArray = data;
-    this._renderer = renderer;
-    this._container = document.querySelector(containerSelector);
+  constructor({ items, renderer }, selectorContainer) {
+    this._items = items;
+    this.renderer = renderer;
+    this._container = document.querySelector(selectorContainer);
   }
 
   renderItems() {
-    this._ititialArray.forEach(item => {
-      this._renderer(item);
+    this._items.forEach((item) => {
+      this.renderer(item);
     });
-  }
+    }
 
-  // функция добавления элемента в контейнер
-  setItem(element) {
+  addItem(element) {
     this._container.prepend(element);
   }
 }
+
+

@@ -2,6 +2,7 @@ export class Popup {
   constructor(selectorPopup) {
     this._popup = document.querySelector(selectorPopup);
     this.setEventListeners = this.setEventListeners.bind(this);
+    this._closePopupByEsc = this._closePopupByEsc.bind(this);
   }
 
   // функция открытия popup
@@ -28,7 +29,7 @@ setEventListeners () {
 }
 
 // функция закрытия popup по esc
-_closePopupByEsc = (evt) => {
+_closePopupByEsc (evt) {
   if (evt.key === 'Escape'){
     this.close();
   }
