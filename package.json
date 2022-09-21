@@ -1,0 +1,28 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "Одностраничный сайт для добаление фотографий, возможность лайкать и удалять.",
+  "main": "index.js",
+  "scripts": {
+    "build": "rd /s /q dist && webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hamstil/mesto.git"
+  },
+  "keywords": [
+    "место",
+    "лендинг",
+    "сайт"
+  ],
+  "author": "Anton Sidorovskiy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hamstil/mesto/issues"
+  },
+  "homepage": "https://github.com/Hamstil/mesto#readme",
+  "devDependencies": {
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  }
+}
