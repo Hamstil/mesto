@@ -11,44 +11,49 @@ import { initialCards, objectFromValidation,
    profileEditButton, profileAddCardButton,
     formTypeEdit, formTypeAdd } from '../utils/data.js';
 
-// функция рендера картинок по умолчанию
-const creatDefaultCards = new Section({items: initialCards, renderer: creatCards}, elementContainer);
-creatDefaultCards.renderItems();
-
 // функция создания карточки
-function creatCards (item) {
+function createCard (item) {
+  // console.log(item);
   const newCard = new Card(item, ".cards-element", viewImageCard);
-  creatDefaultCards.addItem(newCard.generateCard());
+  // console.log(newCard);
+  initialCardsList.addItem(newCard.generateCard());
 }
 
+// функция рендера картинок по умолчанию
+const initialCardsList = new Section({items: initialCards, renderer: createCard}, elementContainer);
+initialCardsList.renderItems();
+
 const modalPopupAdd = new PopupWithForm(popupEditCard, (dataInputs) => {
-  creatDefaultCards.renderer(dataInputs);
+  createCard(dataInputs);
+  // console.log(dataInputs);
+  // initialCardsList.renderer(dataInputs);
+  validatorTypeAdd.disabledButton();
 });
 modalPopupAdd.setEventListenersForm();
 
 
 // событие по кнопке добавления карточки
 profileAddCardButton.addEventListener("click", function () {
-  formTypeAdd.reset();
-  enableValidatorTypeAdd.clearError();
+  validatorTypeAdd.clearError();
   modalPopupAdd.open();
 });
 
 const user = new UserInfo({nameInput: profileTitle, jobInput: profileSubtitle});
 const modalPopupProfile = new PopupWithForm(popupEditProfile, (dataInputs) => {
   user.setUserInfo(dataInputs);
+  validatorTypeEdit.disabledButton();
 });
 modalPopupProfile.setEventListenersForm();
 
 
 // событие по кнопке редактирование профиля
 profileEditButton.addEventListener("click" , function () {
-  formTypeEdit.reset();
-  enableValidatorTypeEdit.clearError();
+  validatorTypeEdit.clearError();
   modalPopupProfile.open();
 });
 
 const popupWithImage = new PopupWithImage(popupViewImage);
+popupWithImage.setEventListeners();
 
 // функция отображения картинки на весь экран
 function viewImageCard (name, link) {
@@ -57,10 +62,10 @@ function viewImageCard (name, link) {
 
 
 // валидация формы редактирования профиля
-const enableValidatorTypeEdit = new FromValidator(objectFromValidation, formTypeEdit);
-enableValidatorTypeEdit.enableValidation();
+const validatorTypeEdit = new FromValidator(objectFromValidation, formTypeEdit);
+validatorTypeEdit.enableValidation();
 // валидация формы добавления карточки
-const enableValidatorTypeAdd = new FromValidator(objectFromValidation, formTypeAdd);
-enableValidatorTypeAdd.enableValidation();
+const validatorTypeAdd = new FromValidator(objectFromValidation, formTypeAdd);
+validatorTypeAdd.enableValidation();
 
 

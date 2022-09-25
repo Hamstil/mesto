@@ -9,7 +9,6 @@ export class Popup {
 open () {
   this._popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", this._closePopupByEsc);
-  this._popup.addEventListener("mousedown", this.setEventListeners);
 }
 
 // функция закрытия popup
