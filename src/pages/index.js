@@ -44,6 +44,7 @@ modalPopupProfile.setEventListenersForm();
 
 // событие по кнопке редактирование профиля
 profileEditButton.addEventListener("click" , function () {
+  modalPopupProfile.setInputValues(user.getUserInfo());
   validatorTypeEdit.clearError();
   modalPopupProfile.open();
 });
