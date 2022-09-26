@@ -13,20 +13,16 @@ import { initialCards, objectFromValidation,
 
 // функция создания карточки
 function createCard (item) {
-  // console.log(item);
-  const newCard = new Card(item, ".cards-element", viewImageCard);
-  // console.log(newCard);
-  initialCardsList.addItem(newCard.generateCard());
+  const newCard = new Card(item, ".cards-element", viewImageCard).generateCard();
+  initialCardsList.addItem(newCard);
+  return newCard;
 }
 
-// функция рендера картинок по умолчанию
 const initialCardsList = new Section({items: initialCards, renderer: createCard}, elementContainer);
 initialCardsList.renderItems();
 
 const modalPopupAdd = new PopupWithForm(popupEditCard, (dataInputs) => {
-  createCard(dataInputs);
-  // console.log(dataInputs);
-  // initialCardsList.renderer(dataInputs);
+  initialCardsList.addItem(createCard(dataInputs));
   validatorTypeAdd.disabledButton();
 });
 modalPopupAdd.setEventListenersForm();
