@@ -1,7 +1,6 @@
 export class Popup {
   constructor(selectorPopup) {
     this._popup = document.querySelector(selectorPopup);
-    this.setEventListeners = this.setEventListeners.bind(this);
     this._closePopupByEsc = this._closePopupByEsc.bind(this);
   }
 
@@ -15,7 +14,6 @@ open () {
 close () {
   this._popup.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", this._closePopupByEsc);
-  this._popup.removeEventListener("mousedown", this.setEventListeners);
 }
 
 // слшатель закрытия по клику на крестик и оверлей
