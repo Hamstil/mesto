@@ -1,4 +1,5 @@
 import './index.css';
+import { Api } from '../components/Api.js';
 import { Card } from '../components/Card.js';
 import { FromValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
@@ -9,7 +10,20 @@ import { initialCards, objectFromValidation,
   popupEditProfile, popupEditCard, popupViewImage,
    profileTitle, profileSubtitle, elementContainer,
    profileEditButton, profileAddCardButton,
-    formTypeEdit, formTypeAdd } from '../utils/data.js';
+    formTypeEdit, formTypeAdd, configApi } from '../utils/data.js';
+
+// Создание класса api
+const api = new Api(configApi);
+
+api.getUserInfo()
+  .then((data) => {
+    user.setUserInfo(data);
+  }).catch((err) => {console.log(`Ошибка ${err}`)});
+
+api.getInitialCards()
+  .then((data) => {
+    console.log(data);
+  }).catch((err) => {console.log((`Ошибка ${err}`))});
 
 // функция создания карточки
 function createCard (item) {
