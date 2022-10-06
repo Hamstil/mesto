@@ -6,38 +6,62 @@ import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm }  from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
-import { initialCards, objectFromValidation,
+import { objectFromValidation,
   popupEditProfile, popupEditCard, popupViewImage,
    profileTitle, profileSubtitle, elementContainer,
    profileEditButton, profileAddCardButton,
     formTypeEdit, formTypeAdd, configApi } from '../utils/data.js';
 
+let profileId = null;
+
 // Создание класса api
 const api = new Api(configApi);
 
-api.getUserInfo()
-  .then((data) => {
-    user.setUserInfo(data);
-  }).catch((err) => {console.log(`Ошибка ${err}`)});
+const user = new UserInfo({nameInput: profileTitle, jobInput: profileSubtitle});
 
-api.getInitialCards()
-  .then((data) => {
-    console.log(data);
-  }).catch((err) => {console.log((`Ошибка ${err}`))});
+api.getAllInfo().then(([profileData, cardData]) => {
+  user.setUserInfo(profileData);
+  profileId = profileData._id;
+  initialCardsList.renderItems(cardData);
+})
+.catch((err) => {
+  console.log((`Ошибка ${err}`));
+  });
+
+const initialCardsList = new Section({ renderer: createCard}, elementContainer);
 
 // функция создания карточки
 function createCard (item) {
-  const newCard = new Card(item, ".cards-element", viewImageCard).generateCard();
-  initialCardsList.addItem(newCard);
+  const newCard = new Card({data: item, cardTemlateSelector: ".cards-element",
+   viewImageCard: (name, link) => {
+    popupWithImage.open(name, link);
+  },
+   handleDeleteCard: (cardId) => {
+    api.deleteCard(cardId).then(() => {
+      newCard.deleteCard();
+    }).catch((err) => {console.log((`Ошибка ${err}`))})
+   },
+  profileId: profileId
+  });
+  initialCardsList.addItem(newCard.generateCard());
   return newCard;
 }
 
-const initialCardsList = new Section({items: initialCards, renderer: createCard}, elementContainer);
-initialCardsList.renderItems();
+
+
 
 const modalPopupAdd = new PopupWithForm(popupEditCard, (dataInputs) => {
-  initialCardsList.addItem(createCard(dataInputs));
-  validatorTypeAdd.disabledButton();
+  modalPopupAdd.renderLoading(true);
+  api.addNewCard(dataInputs)
+  .then((dataInputs) => {
+    initialCardsList.addItem(createCard(dataInputs));
+    validatorTypeAdd.disabledButton();
+  })
+  .catch((err) => {console.log(`Ошибка ${err}`)})
+  .finally(() => {
+    modalPopupAdd.renderLoading(false);
+  })
+
 });
 modalPopupAdd.setEventListenersForm();
 
@@ -48,10 +72,19 @@ profileAddCardButton.addEventListener("click", function () {
   modalPopupAdd.open();
 });
 
-const user = new UserInfo({nameInput: profileTitle, jobInput: profileSubtitle});
+
 const modalPopupProfile = new PopupWithForm(popupEditProfile, (dataInputs) => {
-  user.setUserInfo(dataInputs);
-  validatorTypeEdit.disabledButton();
+  modalPopupProfile.renderLoading(true);
+  api.editProfile(dataInputs)
+  .then((data) => {
+    user.setUserInfo(data);
+    validatorTypeEdit.disabledButton();
+  })
+  .catch((err) => {console.log(`Ошибка ${err}`)})
+  .finally(() => {
+    modalPopupProfile.renderLoading(false);
+  })
+
 });
 modalPopupProfile.setEventListenersForm();
 
@@ -66,10 +99,10 @@ profileEditButton.addEventListener("click" , function () {
 const popupWithImage = new PopupWithImage(popupViewImage);
 popupWithImage.setEventListeners();
 
-// функция отображения картинки на весь экран
-function viewImageCard (name, link) {
-  popupWithImage.open(name, link);
-}
+
+
+
+
 
 
 // валидация формы редактирования профиля

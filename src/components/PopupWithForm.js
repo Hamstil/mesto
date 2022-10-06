@@ -7,6 +7,8 @@ export class PopupWithForm extends Popup {
     this._popup = document.querySelector(selectorPopup);
     this._form = this._popup.querySelector('.popup-form');
     this._formInputs = this._form.querySelectorAll('.popup-form__input');
+    this._buttonSubmit = this._popup.querySelector('.popup-form__button');
+    this._buttonSubmitText = this._buttonSubmit.textContent;
   }
 
   _getInputValues () {
@@ -21,6 +23,14 @@ export class PopupWithForm extends Popup {
     this._formInputs.forEach((input) => {
     input.value = data[input.name];
     });
+  }
+
+  renderLoading(isLoading, loadingText='Сохранение...') {
+    if (isLoading) {
+      this._buttonSubmit.textContent = loadingText;
+    } else {
+      this._buttonSubmit.textContent = this._buttonSubmitText;
+    }
   }
 
   setEventListenersForm () {

@@ -1,11 +1,16 @@
 export class Card {
-  constructor(data, cardTemlateSelector, viewImageCard){
+  constructor({data, cardTemlateSelector, viewImageCard, handleDeleteCard, profileId}){
+    this._data = data;
     this._name = data.name;
     this._link = data.link;
+    this._ownerCardId = data.owner._id;
+    this._profileId = profileId;
     this._cardTemlateSelector = cardTemlateSelector;
     this._viewImageCard = viewImageCard;
+    this._handleDeleteCard = handleDeleteCard;
     this._element = this._getTemplate();
     this._image = this._element.querySelector('.element__image');
+    this._deleteButton = this._element.querySelector('.element__trash');
   }
 
   // шаблон карточки
@@ -21,13 +26,21 @@ export class Card {
     this._image.src = this._link;
     this._image.alt = this._name;
     this._element.querySelector('.element__title').textContent = this._name;
+    this.deleteDeleteButton();
     return this._element;
   }
 
   // функция удаления
-  _handleDel = () => {
+  deleteCard = () => {
     this._element.remove();
     this._element = null;
+  }
+
+  // удаление кнопки удаления карты
+  deleteDeleteButton() {
+    if (this._ownerCardId !== this._profileId) {
+      this._deleteButton.remove();
+    }
   }
 
   // функция лайка
@@ -42,12 +55,19 @@ export class Card {
     this._element.querySelector('.element__like').addEventListener('click', this._handleLike);
 
     // слушатель удаления
-    this._element.querySelector('.element__trash').addEventListener('click', this._handleDel);
+    this._element.querySelector('.element__trash').addEventListener('click', () => {
+      this._handleDeleteCard(this.getId());
+    });
 
     // слушатель для открытия popup image
     this._image.addEventListener('click', () => {
       this._viewImageCard(this._name, this._link);
     });
+  }
+
+  // получение id карточки
+  getId() {
+    return this._data._id;
   }
 
 }
