@@ -68,5 +68,16 @@ export class Api {
       .then(this.#onResponce)
     }
 
+    // Смена аватара
+    editAvatar(data) {
+      return fetch(`${this._url}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: data.avatar
+        })
+      }).then(this.#onResponce)
+    }
+
 
 }

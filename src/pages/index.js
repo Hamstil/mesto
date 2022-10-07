@@ -7,17 +7,17 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm }  from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { objectFromValidation,
-  popupEditProfile, popupEditCard, popupViewImage,
-   profileTitle, profileSubtitle, elementContainer,
-   profileEditButton, profileAddCardButton,
-    formTypeEdit, formTypeAdd, configApi } from '../utils/data.js';
+  popupEditProfile, popupEditCard, popupViewImage, popupEditAvatar,
+   elementContainer, profileTitle, profileSubtitle, profileAvatarImage,
+   profileEditButton, profileAddCardButton, profileAddAvatarButton, formTypeEdit, formTypeAdd, formTypeAvatar, configApi } from '../utils/data.js';
+import FormValidator from 'd:/download/mesto-main10/mesto-main/src/components/formvalidator';
 
 let profileId = null;
 
 // Создание класса api
 const api = new Api(configApi);
 
-const user = new UserInfo({nameInput: profileTitle, jobInput: profileSubtitle});
+const user = new UserInfo({nameInput: profileTitle, jobInput: profileSubtitle, avatarSelector: profileAvatarImage});
 
 api.getAllInfo().then(([profileData, cardData]) => {
   user.setUserInfo(profileData);
@@ -47,14 +47,12 @@ function createCard (item) {
   return newCard;
 }
 
-
-
-
+// добавление карточки
 const modalPopupAdd = new PopupWithForm(popupEditCard, (dataInputs) => {
   modalPopupAdd.renderLoading(true);
   api.addNewCard(dataInputs)
   .then((dataInputs) => {
-    initialCardsList.addItem(createCard(dataInputs));
+    createCard(dataInputs);
     validatorTypeAdd.disabledButton();
   })
   .catch((err) => {console.log(`Ошибка ${err}`)})
@@ -64,7 +62,6 @@ const modalPopupAdd = new PopupWithForm(popupEditCard, (dataInputs) => {
 
 });
 modalPopupAdd.setEventListenersForm();
-
 
 // событие по кнопке добавления карточки
 profileAddCardButton.addEventListener("click", function () {
@@ -96,15 +93,38 @@ profileEditButton.addEventListener("click" , function () {
   modalPopupProfile.open();
 });
 
+
+// Попап смены аватара
+const modalPopupProfileAvatar = new PopupWithForm(popupEditAvatar, (dataInputs) => {
+  modalPopupProfileAvatar.renderLoading(true);
+  api.editAvatar(dataInputs)
+  .then((dataInputs) => {
+    user.setUserInfo(dataInputs);
+  })
+  .catch((err) => {console.log(`Ошибка ${err}`)})
+  .finally(() => {
+    modalPopupProfileAvatar.renderLoading(false);
+  })
+
+});
+modalPopupProfileAvatar.setEventListenersForm();
+
+profileAddAvatarButton.addEventListener("click", function() {
+  validatorTypeAvatar.clearError();
+  modalPopupProfileAvatar.open();
+});
+
+
+// попап
 const popupWithImage = new PopupWithImage(popupViewImage);
 popupWithImage.setEventListeners();
 
 
 
 
-
-
-
+// валидация формы обнавления аватара
+const validatorTypeAvatar = new FromValidator(objectFromValidation, formTypeAvatar);
+validatorTypeAvatar.enableValidation();
 // валидация формы редактирования профиля
 const validatorTypeEdit = new FromValidator(objectFromValidation, formTypeEdit);
 validatorTypeEdit.enableValidation();

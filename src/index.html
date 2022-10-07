@@ -14,11 +14,13 @@
   </header>
   <main class="content">
     <section class="profile content__profile">
-      <img src="<%=require('./images/profil.jpg')%>" alt="аватар" class="profile__avatar">
+      <div class="profile__image">
+        <img src="" alt="аватар" class="profile__avatar">
+      </div>
       <div class="profile__info">
         <div class="profile__text">
-          <h1 class="profile__title">Жак-Ив Кусто</h1>
-          <p class="profile__subtitle">Исследователь океана</p>
+          <h1 class="profile__title"></h1>
+          <p class="profile__subtitle"></p>
         </div>
         <button aria-label="Изменить профиль" type="button" class="profile__edit-button"></button>
       </div>
@@ -32,7 +34,10 @@
             <img src="#" alt="карточка шаблон" class="element__image">
             <div class="element__group">
               <h2 class="element__title"></h2>
-              <button aria-label="кнопка лайка" type="button" class="element__like"></button>
+              <div class="elment__group-like">
+                <button aria-label="кнопка лайка" type="button" class="element__like"></button>
+                <p class="element__count">0</p>
+              </div>
             </div>
           </li>
         </template>
@@ -49,11 +54,13 @@
       <h2 class="popup__title">Редактировать профиль</h2>
       <form name="edit-profile" class="popup-form popup-form_type_edit" novalidate>
         <label class="popup-form__field">
-          <input id="profile-name" type="text" name="name" value="" placeholder="Введите имя" class="popup-form__input popup-form__input_text_name" minlength="2" maxlength="40" required>
+          <input id="profile-name" type="text" name="name" value="" placeholder="Введите имя"
+            class="popup-form__input popup-form__input_text_name" minlength="2" maxlength="40" required>
           <span class="popup-form__error profile-name-error"></span>
         </label>
         <label class="popup-form__field">
-          <input id="profile-job" type="text" name="about" value="" placeholder="Введите род деятельности" class="popup-form__input popup-form__input_text_job" minlength="2" maxlength="200" required>
+          <input id="profile-job" type="text" name="about" value="" placeholder="Введите род деятельности"
+            class="popup-form__input popup-form__input_text_job" minlength="2" maxlength="200" required>
           <span class="popup-form__error profile-job-error"></span>
         </label>
         <button aria-label="Кнопка сохранить" type="submit" class="popup-form__button">Сохранить</button>
@@ -67,12 +74,29 @@
       <h2 class="popup__title">Новое место</h2>
       <form name="edit-card" class="popup-form popup-form_type_add" novalidate>
         <label class="popup-form__field">
-           <input id="place-name" type="text" name="name" value="" placeholder="Введите название места" class="popup-form__input popup-form__input_text_name-place" minlength="2" maxlength="30" required>
-           <span class="popup-form__error place-name-error"></span>
+          <input id="place-name" type="text" name="name" value="" placeholder="Введите название места"
+            class="popup-form__input popup-form__input_text_name-place" minlength="2" maxlength="30" required>
+          <span class="popup-form__error place-name-error"></span>
         </label>
         <label class="popup-form__field">
-           <input id="place-link" type="url" name="link" value="" placeholder="Введите ссылку на изображение" class="popup-form__input popup-form__input_text_place-link" required>
-           <span class="popup-form__error place-link-error"></span>
+          <input id="place-link" type="url" name="link" value="" placeholder="Введите ссылку на изображение"
+            class="popup-form__input popup-form__input_text_place-link" required>
+          <span class="popup-form__error place-link-error"></span>
+        </label>
+        <button aria-label="Кнопка создать" type="submit" class="popup-form__button">Создать</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_edit_avatar">
+    <div class="popup__content">
+      <button aria-label="Закрыть диалоговое окно" type="button" class="popup__close"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form name="edit-avatar" class="popup-form popup-form_type_avatar" novalidate>
+        <label class="popup-form__field">
+          <input id="avatar-link" type="url" name="avatar" value="" placeholder="Введите ссылку на изображение"
+            class="popup-form__input popup-form__input_text_link-avatar" required>
+          <span class="popup-form__error avatar-link-error"></span>
         </label>
         <button aria-label="Кнопка создать" type="submit" class="popup-form__button">Создать</button>
       </form>

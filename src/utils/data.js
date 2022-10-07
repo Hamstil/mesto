@@ -19,22 +19,26 @@ const configApi = {
 const popupEditProfile = ".popup_edit_profile";
 const popupEditCard = ".popup_edit_card";
 const popupViewImage = ".popup_view_image";
+const popupEditAvatar = ".popup_edit_avatar";
+
 
 // Выбор контейнера под шаблон и сам шаблон
+const profileAvatarImage = ".profile__avatar";
 const elementContainer = ".elements-content";
-
 const profileTitle = ".profile__title";
 const profileSubtitle = ".profile__subtitle";
 
 // Выбор кнопок редактирования, добавления и закрытия
 const profileEditButton = document.querySelector(".profile__edit-button"); //кнопка открытия профиля
 const profileAddCardButton = document.querySelector(".profile__add-card-button"); // кнопка добавления карточки
+const profileAddAvatarButton = document.querySelector(".profile__image"); // кнопка добавления аватара
 
 // Выбор форм
 const formTypeEdit = document.querySelector(".popup-form_type_edit"); // форма редактирования профиля
 const formTypeAdd = document.querySelector(".popup-form_type_add"); // форма добавления карточки
+const formTypeAvatar = document.querySelector(".popup-form_type_avatar"); // форма добавления аватара
 
 export {objectFromValidation,
-   popupEditProfile, popupEditCard, popupViewImage,
-    elementContainer, profileTitle, profileSubtitle,
-    profileEditButton, profileAddCardButton, formTypeEdit, formTypeAdd, configApi};
+   popupEditProfile, popupEditCard, popupViewImage, popupEditAvatar,
+    elementContainer, profileTitle, profileSubtitle, profileAvatarImage,
+    profileEditButton, profileAddCardButton, profileAddAvatarButton, formTypeEdit, formTypeAdd, formTypeAvatar, configApi};
