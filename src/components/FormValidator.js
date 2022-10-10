@@ -2,6 +2,8 @@ export class FromValidator {
   constructor(objectFormValid, formElement){
       this._objectFormValid = objectFormValid;
       this._formElement = formElement;
+      this._inputList = Array.from(this._formElement.querySelectorAll(this._objectFormValid.inputSelector));
+      this._buttonElement = this._formElement.querySelector(this._objectFormValid.submitButtonSelector);
   }
 
   // фунция включения валидации
@@ -11,9 +13,6 @@ export class FromValidator {
 
   // функция слушатель событий ввода
   _setEventListeners(){
-    this._inputList = Array.from(this._formElement.querySelectorAll(this._objectFormValid.inputSelector));
-    this._buttonElement = this._formElement.querySelector(this._objectFormValid.submitButtonSelector);
-
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);

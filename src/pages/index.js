@@ -24,7 +24,7 @@ const user = new UserInfo({nameInput: profileTitle, jobInput: profileSubtitle, a
 api.getAllInfo().then(([profileData, cardData]) => {
   user.setUserInfo(profileData);
   profileId = profileData._id;
-  initialCardsList.renderItems(cardData);
+  initialCardsList.renderItems(cardData.reverse());
 })
 .catch((err) => {
   console.log((`Ошибка ${err}`));
@@ -72,6 +72,7 @@ const modalPopupAdd = new PopupWithForm(popupEditCard, (dataInputs) => {
   api.addNewCard(dataInputs)
   .then((dataInputs) => {
     createCard(dataInputs);
+    modalPopupAdd.close();
     validatorTypeAdd.disabledButton();
   })
   .catch((err) => {console.log(`Ошибка ${err}`)})
@@ -95,6 +96,7 @@ const modalPopupProfile = new PopupWithForm(popupEditProfile, (dataInputs) => {
   api.editProfile(dataInputs)
   .then((data) => {
     user.setUserInfo(data);
+    modalPopupProfile.close();
     validatorTypeEdit.disabledButton();
   })
   .catch((err) => {console.log(`Ошибка ${err}`)})
@@ -119,6 +121,7 @@ const modalPopupProfileAvatar = new PopupWithForm(popupEditAvatar, (dataInputs) 
   api.editAvatar(dataInputs)
   .then((dataInputs) => {
     user.setUserInfo(dataInputs);
+    modalPopupProfileAvatar.close();
   })
   .catch((err) => {console.log(`Ошибка ${err}`)})
   .finally(() => {
