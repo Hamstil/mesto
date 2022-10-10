@@ -5,12 +5,13 @@ import { FromValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm }  from '../components/PopupWithForm.js';
+import { PopupDeleteCard } from '../components/PopupDeleteCard.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { objectFromValidation,
-  popupEditProfile, popupEditCard, popupViewImage, popupEditAvatar,
+  popupEditProfile, popupEditCard, popupViewImage, popupEditAvatar, popupDeleteCard,
    elementContainer, profileTitle, profileSubtitle, profileAvatarImage,
    profileEditButton, profileAddCardButton, profileAddAvatarButton, formTypeEdit, formTypeAdd, formTypeAvatar, configApi } from '../utils/data.js';
-import FormValidator from 'd:/download/mesto-main10/mesto-main/src/components/formvalidator';
+
 
 let profileId = null;
 
@@ -37,9 +38,14 @@ function createCard (item) {
     popupWithImage.open(name, link);
   },
    handleDeleteCard: (cardId) => {
-    api.deleteCard(cardId).then(() => {
-      newCard.deleteCard();
-    }).catch((err) => {console.log((`Ошибка ${err}`))})
+    popupSubmitDeleteCard.open();
+    popupSubmitDeleteCard.setSubmitDelete(() => {
+      api.deleteCard(cardId).then(() => {
+        newCard.deleteCard();
+        popupSubmitDeleteCard.close();
+      }).catch((err) => {console.log((`Ошибка ${err}`))})
+    })
+
    },
   profileId: profileId
   });
@@ -115,10 +121,13 @@ profileAddAvatarButton.addEventListener("click", function() {
 });
 
 
-// попап
+// попап изображения
 const popupWithImage = new PopupWithImage(popupViewImage);
 popupWithImage.setEventListeners();
 
+// попап удаления катрочки
+const popupSubmitDeleteCard = new PopupDeleteCard(popupDeleteCard);
+popupSubmitDeleteCard.setEventListenersFromDelete();
 
 
 

@@ -20,6 +20,7 @@ const popupEditProfile = ".popup_edit_profile";
 const popupEditCard = ".popup_edit_card";
 const popupViewImage = ".popup_view_image";
 const popupEditAvatar = ".popup_edit_avatar";
+const popupDeleteCard = ".popup_type_delete";
 
 
 // Выбор контейнера под шаблон и сам шаблон
@@ -39,6 +40,6 @@ const formTypeAdd = document.querySelector(".popup-form_type_add"); // форм�
 const formTypeAvatar = document.querySelector(".popup-form_type_avatar"); // форма добавления аватара
 
 export {objectFromValidation,
-   popupEditProfile, popupEditCard, popupViewImage, popupEditAvatar,
+   popupEditProfile, popupEditCard, popupViewImage, popupEditAvatar, popupDeleteCard,
     elementContainer, profileTitle, profileSubtitle, profileAvatarImage,
     profileEditButton, profileAddCardButton, profileAddAvatarButton, formTypeEdit, formTypeAdd, formTypeAvatar, configApi};

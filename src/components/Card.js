@@ -9,8 +9,10 @@ export class Card {
     this._viewImageCard = viewImageCard;
     this._handleDeleteCard = handleDeleteCard;
     this._element = this._getTemplate();
-    this._image = this._element.querySelector('.element__image');
-    this._deleteButton = this._element.querySelector('.element__trash');
+    this._image = this._element.querySelector('.element__image'); // элемент изображения карточки
+    this._deleteButton = this._element.querySelector('.element__trash'); // кнопка удалени карточки
+    this._likeCount = this._element.querySelector('.element__count'); // счетчик лайков
+    this._likeButton = this._element.querySelector('.element__like'); // кнопка лайка
   }
 
   // шаблон карточки
@@ -25,6 +27,7 @@ export class Card {
     this._setEventListener();
     this._image.src = this._link;
     this._image.alt = this._name;
+    this._likeCount.textContent = this.displayLikes();
     this._element.querySelector('.element__title').textContent = this._name;
     this.deleteDeleteButton();
     return this._element;
@@ -34,6 +37,11 @@ export class Card {
   deleteCard = () => {
     this._element.remove();
     this._element = null;
+  }
+
+  // показ лайков
+  displayLikes() {
+    return this._data.likes.length;
   }
 
   // удаление кнопки удаления карты
@@ -52,10 +60,10 @@ export class Card {
   _setEventListener () {
 
     // слушатель лайка
-    this._element.querySelector('.element__like').addEventListener('click', this._handleLike);
+    this._likeButton.addEventListener('click', this._handleLike);
 
     // слушатель удаления
-    this._element.querySelector('.element__trash').addEventListener('click', () => {
+    this._deleteButton.addEventListener('click', () => {
       this._handleDeleteCard(this.getId());
     });
 
