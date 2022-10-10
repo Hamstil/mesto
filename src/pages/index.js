@@ -20,6 +20,7 @@ const api = new Api(configApi);
 
 const user = new UserInfo({nameInput: profileTitle, jobInput: profileSubtitle, avatarSelector: profileAvatarImage});
 
+// апи данных карточек и пользователя
 api.getAllInfo().then(([profileData, cardData]) => {
   user.setUserInfo(profileData);
   profileId = profileData._id;
@@ -45,15 +46,27 @@ function createCard (item) {
         popupSubmitDeleteCard.close();
       }).catch((err) => {console.log((`Ошибка ${err}`))})
     })
-
    },
+   handleRemoveLike: (cardId) => {
+    api.removeLike(cardId)
+    .then((data) => {
+      newCard.handleLikeCard(data);
+    }).catch((err) => {console.log((`Ошибка ${err}`))})
+   },
+   handleAddLike: (cardId) => {
+    api.addLike(cardId)
+    .then((data) => {
+      newCard.handleLikeCard(data);
+    }).catch((err) => {console.log((`Ошибка ${err}`))})
+   },
+
   profileId: profileId
   });
   initialCardsList.addItem(newCard.generateCard());
   return newCard;
 }
 
-// добавление карточки
+// Попап добавления карточки
 const modalPopupAdd = new PopupWithForm(popupEditCard, (dataInputs) => {
   modalPopupAdd.renderLoading(true);
   api.addNewCard(dataInputs)
@@ -76,6 +89,7 @@ profileAddCardButton.addEventListener("click", function () {
 });
 
 
+// Попап изменения данных о пользователе
 const modalPopupProfile = new PopupWithForm(popupEditProfile, (dataInputs) => {
   modalPopupProfile.renderLoading(true);
   api.editProfile(dataInputs)
@@ -91,7 +105,6 @@ const modalPopupProfile = new PopupWithForm(popupEditProfile, (dataInputs) => {
 });
 modalPopupProfile.setEventListenersForm();
 
-
 // событие по кнопке редактирование профиля
 profileEditButton.addEventListener("click" , function () {
   modalPopupProfile.setInputValues(user.getUserInfo());
@@ -100,7 +113,7 @@ profileEditButton.addEventListener("click" , function () {
 });
 
 
-// Попап смены аватара
+// Попап изменения данных аватара
 const modalPopupProfileAvatar = new PopupWithForm(popupEditAvatar, (dataInputs) => {
   modalPopupProfileAvatar.renderLoading(true);
   api.editAvatar(dataInputs)
@@ -115,6 +128,7 @@ const modalPopupProfileAvatar = new PopupWithForm(popupEditAvatar, (dataInputs) 
 });
 modalPopupProfileAvatar.setEventListenersForm();
 
+// события по кнопке аватара
 profileAddAvatarButton.addEventListener("click", function() {
   validatorTypeAvatar.clearError();
   modalPopupProfileAvatar.open();

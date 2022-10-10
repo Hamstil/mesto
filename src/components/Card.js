@@ -1,13 +1,16 @@
 export class Card {
-  constructor({data, cardTemlateSelector, viewImageCard, handleDeleteCard, profileId}){
+  constructor({data, cardTemlateSelector, viewImageCard, handleDeleteCard, handleRemoveLike, handleAddLike, profileId}){
     this._data = data;
     this._name = data.name;
     this._link = data.link;
+    this._likes = data.likes;
     this._ownerCardId = data.owner._id;
     this._profileId = profileId;
     this._cardTemlateSelector = cardTemlateSelector;
     this._viewImageCard = viewImageCard;
     this._handleDeleteCard = handleDeleteCard;
+    this._handleRemoveLike = handleRemoveLike;
+    this._handleAddLike = handleAddLike;
     this._element = this._getTemplate();
     this._image = this._element.querySelector('.element__image'); // элемент изображения карточки
     this._deleteButton = this._element.querySelector('.element__trash'); // кнопка удалени карточки
@@ -27,8 +30,9 @@ export class Card {
     this._setEventListener();
     this._image.src = this._link;
     this._image.alt = this._name;
-    this._likeCount.textContent = this.displayLikes();
     this._element.querySelector('.element__title').textContent = this._name;
+    this.checkLikeCard();
+    this._likeCount.textContent = this._likes.length;
     this.deleteDeleteButton();
     return this._element;
   }
@@ -39,11 +43,6 @@ export class Card {
     this._element = null;
   }
 
-  // показ лайков
-  displayLikes() {
-    return this._data.likes.length;
-  }
-
   // удаление кнопки удаления карты
   deleteDeleteButton() {
     if (this._ownerCardId !== this._profileId) {
@@ -51,16 +50,33 @@ export class Card {
     }
   }
 
-  // функция лайка
-  _handleLike = (evt) => {
-    evt.target.classList.toggle("element__like_enable");
+  // функция лайка на карточках
+  handleLikeCard (data) {
+    this._likes = data.likes;
+    this._likeCount.textContent = this._likes.length;
+    this._likeButton.classList.toggle("element__like_enable");
+  }
+
+  // Проверка лайкнутых карточек
+  checkLikeCard() {
+    if (this._likes.some((user) => {
+      return this._profileId === user._id;
+    })) {
+      this._likeButton.classList.add('element__like_enable');
+    }
   }
 
   // слушатели событий
   _setEventListener () {
 
     // слушатель лайка
-    this._likeButton.addEventListener('click', this._handleLike);
+    this._likeButton.addEventListener('click', () => {
+      if (this._likeButton.classList.contains('element__like_enable')){
+        this._handleRemoveLike(this.getId());
+      }else{
+        this._handleAddLike(this.getId());
+      }
+    });
 
     // слушатель удаления
     this._deleteButton.addEventListener('click', () => {

@@ -18,7 +18,7 @@ close () {
 
 // слшатель закрытия по клику на крестик и оверлей
 setEventListeners () {
-  this._popup.addEventListener('click', (evt) => {
+  this._popup.addEventListener('mousedown', (evt) => {
     if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
       this.close();
     }

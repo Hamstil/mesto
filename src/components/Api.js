@@ -79,5 +79,19 @@ export class Api {
       }).then(this.#onResponce)
     }
 
+    // Постановка лайка
+    addLike(cardId) {
+      return fetch(`${this._url}/cards/${cardId}/likes`, {
+        method: 'PUT',
+        headers: this._headers
+      }).then(this.#onResponce)
+    }
 
+    // Снятие лайка
+    removeLike(cardId) {
+      return fetch(`${this._url}/cards/${cardId}/likes`, {
+        method: 'DELETE',
+        headers: this._headers
+      }).then(this.#onResponce)
+    }
 }
